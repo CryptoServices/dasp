@@ -1,0 +1,59 @@
+<article>
+	<div class="container">
+		<!-- title -->
+		<h1 class="display-4" id="item-{{ num }}"><i class="fas fa-transgender-alt fa-sm"></i> {{ num }}. Bad Randomness</h1>
+		<!-- alternate names -->
+		<h5>also known as <strong>nothing is secret</strong></h5>
+		<hr class="my-4">
+		<!-- quote -->
+		<p class="lead">
+			The contract had insufficient validation of the block.number age, which resulted in 400 ETH being lost to an unknown player who waited for 256 blocks before revealing the predictable winning number.
+			<footer class="blockquote-footer">Arseny Reutov</cite></footer>
+		</p>
+		<hr>
+		<!-- description -->
+		<p>Randomness is hard to get right in Ethereum. While Solidity offers <a href="http://solidity.readthedocs.io/en/v0.4.21/units-and-global-variables.html" target="_blank">functions and variables</a> that can access apparently hard-to-predict values, they are generally either more public than they seem or subject to miners' influence. Because these sources of randomness are to an extent predictable, malicious users can generally replicate it and attack the function relying on its unpredictablility.</p>
+		<!-- numbers if loss occured -->
+		<p><strong>Loss</strong>: more than 400 ETH</p>
+		<!-- real world impact -->
+		<p><strong>Real World Impact</strong>:</p>
+		<ul>
+			<li><a href="https://www.reddit.com/r/ethereum/comments/74d3dc/smartbillions_lottery_contract_just_got_hacked/" target="_blank">SmartBillions Lottery</a></li>
+			<li><a href="https://medium.com/@hrishiolickel/why-smart-contracts-fail-undiscovered-bugs-and-what-we-can-do-about-them-119aa2843007" target="_blank">TheRun</a></li>
+		</ul>
+		<!-- example scenario -->
+		<p><strong>Example</strong>:</p>
+		<ol>
+			<li>A <span class="contract victim">smart contract</span> uses the block number as a source of randomness for a game.</li>
+			<li>An attacker creates a <span class="contract attacker">malicious contract</span> that checks if the current block number is a winner. If so, it calls the first <span class="contract victim">smart contract</span> in order to win; since the call will be part of the same transaction, the block number will remain the same on both contracts.</li>
+			<li>The attacker only has to call her <span class="contract attacker">malicious contract</span> until it wins.</li>
+		</ol>
+		<!-- code examples -->
+		<p><strong>Code Example</strong>:</p>
+		<p>In this first example, a <code>private seed</code> is used in combination with an <code>iteration</code> number and the <code>keccak256</code> hash function to determine if the caller wins. Eventhough the <code>seed</code> is <code>private</code>, it must have been set via a transaction at some point in time and it is thus visible on the blockchain.</p>
+<pre><code>uint256 private seed;
+
+function play() public payable {
+	require(msg.value >= 1 ether);
+	iteration++;
+	uint randomNumber = uint(keccak256(seed + iteration));
+	if (randomNumber % 2 == 0) {
+		msg.sender.transfer(this.balance);
+	}
+}</code></pre>
+		<p>In this second example, <code>block.blockhash</code> is being used to generate a random number. This hash is unknown if the <code>blockNumber</code> is set to the current <code>block.number</code> (for obvious reasons), and is thus set to <code>0</code>. In the case where the <code>blockNumber</code> is set to more than 256 blocks in the past, it will always be zero. Finally, if it is set to a previous block number that is not too old, another smart contract can access the same number and call the game contract as part of the same transaction.</p>
+
+<pre><code>function play() public payable {
+	require(msg.value >= 1 ether);
+	if (block.blockhash(blockNumber) % 2 == 0) {
+		msg.sender.transfer(this.balance);
+	}
+}</code></pre>
+		<!-- additional resources -->
+		<p><strong>Additional Resources</strong>:</p>
+		<ul>
+			<li><a href="https://blog.positive.com/predicting-random-numbers-in-ethereum-smart-contracts-e5358c6b8620">Predicting Random Numbers in Ethereum Smart Contracts</a></li>
+			<li><a href="https://blog.otlw.co/random-in-ethereum-50eefd09d33e" target="_blank">Random in Ethereum</a></li>
+		</ul>
+	</div>
+</article>

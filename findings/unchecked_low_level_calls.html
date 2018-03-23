@@ -1,0 +1,42 @@
+<article>
+	<div class="container">
+		<!-- title -->
+		<h1 class="display-4" id="item-{{ num }}"><i class="fas fa-check fa-sm"></i> {{ num }}. Unchecked Return Values For Low Level Calls</h1>
+		<h5>also known as or related to <strong>silent failing sends</strong>, <strong>unchecked-send</strong></h5>
+
+		<hr class="my-4">
+		<!-- quote -->
+		<p class="lead">
+			The use of low level "call" should be avoided whenever possible. It can lead to unexpected behavior if return values are not handled properly.
+			<footer class="blockquote-footer">Remix</cite></footer>
+		</p>
+		<hr>
+		<!-- description -->
+		<p>One of the deeper features of Solidity are the low level functions <code>call()</code>, <code>callcode()</code>, <code>delegatecall()</code> and <code>send()</code>. Their behavior in accounting for errors is quite different from other Solidity functions, as they will not propagate (or bubble up) and will not lead to a total reversion of the current execution. Instead, they will return a boolean value set to <code>false</code>, and the code will continue to run. This can surprise developers and, if the return value of such low-level calls are not checked, can lead to fail-opens and other unwanted outcomes. Remember, <strong>send can fail!</strong></p>
+		<!-- real world impact -->
+		<p><strong>Real World Impact</strong>:</p>
+		<ul>
+			<li><a href="https://www.kingoftheether.com/postmortem.html" target="_blank">King of the Ether</a></li>
+			<li><a href="">Etherpot</a></li>
+		</ul>
+		<!-- example scenario -->
+<!--		<p><strong>Example</strong>:</p>
+		<ol>
+		</ol> -->
+		<!-- code examples -->
+		<p><strong>Code Example</strong>:</p>
+		<p>The following code is an example of what can go wrong when one forgets to check the return value of <code>send()</code>. If the call is used to send ether to a smart contract that does not accept them (e.g. because it does not have a <strong>payable</strong> fallback function), the EVM will replace its return value with <code>false</code>. Since the return value is not checked in our example, the function's changes to the contract state will not be reverted, and the <code>etherLeft</code> variable will end up tracking an incorrect value:</p>
+<pre><code>function withdraw(uint256 _amount) public {
+	require(balances[msg.sender] >= _amount);
+	balances[msg.sender] -= _amount;
+	etherLeft -= _amount;
+	msg.sender.send(_amount);
+}</code></pre>
+		<!-- additional resources -->
+		<p><strong>Additional Resources</strong>:</p>
+		<ul>
+			<li><a href="https://github.com/trailofbits/not-so-smart-contracts/tree/master/unchecked_external_call" target="_blank">Unchecked external call</a></li>
+			<li><a href="http://hackingdistributed.com/2016/06/16/scanning-live-ethereum-contracts-for-bugs/" target="_blank">Scanning Live Ethereum Contracts for the "Unchecked-Send" Bug</a></li>
+		</ul>
+	</div>
+</article>

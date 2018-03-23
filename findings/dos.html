@@ -1,0 +1,62 @@
+<article>
+	<div class="container">
+		<!-- title -->
+		<h1 class="display-4" id="item-{{ num }}"><i class="fas fa-ban fa-sm"></i> {{ num }}. Denial of Service</h1>
+		<!-- alternate names -->
+		<h5>including <strong>gas limit reached</strong>, <strong>unexpected throw</strong>, <strong>unexpected kill</strong>, <strong>access control breached</strong></h5>
+		<hr class="my-4">
+		<!-- quote -->
+		<p class="lead">
+			I accidentally killed it.
+			<footer class="blockquote-footer"><a href="https://github.com/paritytech/parity/issues/6995" target="_blank">devops199 on the Parity multi-sig wallet</a></cite></footer>
+		</p>
+		<hr>
+		<!-- description -->
+		<p>Denial of service is deadly in the world of Ethereum: while other types of applications can eventually recover, smart contracts can be taken offline forever by just one of these attacks. Many ways lead to denials of service, including maliciously behaving when being the recipient of a transaction,  artificially increasing the gas necessary to compute a function, abusing access controls to access private components of smart contracts, taking advantage of mixups and negligence, ... This class of attack includes many different variants and will probably see a lot of development in the years to come.</p>
+		<!-- numbers if loss occured -->
+		<p><strong>Loss</strong>: estimated at 514,874 ETH (~300M USD at the time)</p>
+		<!-- real world impact -->
+		<p><strong>Real World Impact</strong>:</p>
+		<ul>
+			<li><a href="https://www.reddit.com/r/ethereum/comments/4ghzhv/governmentals_1100_eth_jackpot_payout_is_stuck/" target="_blank">GovernMental</a></li>
+			<li><a href="http://paritytech.io/a-postmortem-on-the-parity-multi-sig-library-self-destruct/">Parity Multi-sig wallet</a></li>
+		</ul>
+		<!-- example scenario -->
+		<!-- (1) gas limit (2) unexpected throw (3) money tracking issues (escrowed, sent on suicide). (4) logic calls into attacker controlled addresses (unpayable fallbacks) (4) negligence will place kill switch in public libraries (parity) -->
+		<p><strong>Example</strong>:</p>
+		<ol>
+			<li>An <span class="contract victim">auction contract</span> allows its users to bid on different assets.</li>
+			<li>To bid, a user must call a <code>bid(uint object)</code> function with the desired amount of ether. The auction contract will store the ether in <strong>escrow</strong> until the object's owner accepts the bid or the initial bidder cancels it. This means that the auction contract must hold the full value of any unresolved bid in its balance.</li>
+			<li>The <span class="contract victim">auction contract</span> also contains a <code>withdraw(uint amount)</code> function which allows admins to retrieve funds from the contract. As the function sends the <code>amount</code> to a hardcoded address, the developers have decided to make the function public.</li>
+			<li>An <span class="contract attacker">attacker</span> sees a potential attack and calls the function, directing all the <span class="contract victim">contract</span>'s funds to its admins. This destroys the promise of escrow and blocks all the pending bids.</li>
+			<li> While the admins might return the escrowed money to the contract, the <span class="contract attacker">attacker</span> can continue the attack by simply withdrawing the funds again.</li>
+		</ol>
+		<!-- code examples -->
+		<p><strong>Code Example</strong>:</p>
+
+		<p>In the following example (inspired by <a href="http://blockchain.unica.it/projects/ethereum-survey/attacks.html#kotet">King of the Ether</a>) a function of a game contract allows you to become the president if you publicly bribe the previous one. Unfortunately, if the previous president is a smart contract and causes reversion on payment, the transfer of power will fail and the malicious smart contract will remain president forever. Sounds like a dictatorship to me:</p>
+
+<pre><code>function becomePresident() payable {
+    require(msg.value >= price); // must pay the price to become president
+    president.transfer(price);   // we pay the previous president
+    president = msg.sender;      // we crown the new president
+    price = price * 2;           // we double the price to become president
+}</code></pre>
+
+		<p>In this second example, a caller can decide who the next function call will reward. Because of the expensive instructions in the <code>for</code> loop, an attacker can introduce a number too large to iterate on (due to gas block limitations in Ethereum) which will effectively block the function from functionning.</p>
+
+<pre><code>function selectNextWinners(uint256 _largestWinner) {
+	for(uint256 i = 0; i < largestWinner, i++) {
+		// heavy code
+	}
+	largestWinner = _largestWinner;
+}</code></pre>
+
+		<!-- additional resources -->
+		<p><strong>Additional Resources</strong>:</p>
+		<ul>
+			<li><a href="https://medium.com/chain-cloud-company-blog/parity-multisig-hack-again-b46771eaa838">Parity Multisig Hacked. Again</a></li>
+			<li><a href="https://blog.artoken.io/statement-on-the-parity-multi-sig-wallet-vulnerability-and-the-cappasity-artoken-crowdsale-b3a3fed2d567">Statement on the Parity multi-sig wallet vulnerability and the Cappasity token crowdsale</a></li>
+		</ul>
+	</div>
+</article>

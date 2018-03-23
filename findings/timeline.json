@@ -1,0 +1,142 @@
+[
+	{
+		"name": "Roulette", 
+		"tags": ["randomness", "private seed"],
+		"date": "August 11, 2015",
+		"link": ["http://martin.swende.se/blog/Breaking_the_house.html"],
+		"loss": "No loss"
+	},
+	{
+		"name": "King of the Ether", 
+		"tags": ["unchecked return value"],
+		"date": "February 6, 2016",
+		"link": ["https://www.kingoftheether.com/postmortem.html"]
+	},
+	{
+		"name": "EthAddress.org", 
+		"tags": ["off-chain"],
+		"date": "February 26, 2016",
+		"link": ["https://www.reddit.com/r/ethereum/comments/47nkoi/psa_check_your_ethaddressorg_wallets_and_any/"],
+		"loss": "120 ETH"
+	},
+	{
+		"name": "FirePonzi", 
+		"tags": ["mixup", "underscore variables"],
+		"date": "April 11, 2016",
+		"link": ["https://www.reddit.com/r/ethereum/comments/4e5y30/live_example_of_underhanded_solidity_coding_on/"],
+		"loss": "0.1 ETH"
+	},
+	{
+		"name": "Rubixi", 
+		"tags": ["mixup", "constructor"],
+		"date": "April 11, 2016",
+		"link": ["https://blog.ethereum.org/2016/06/19/thinking-smart-contract-security/", "https://etherscan.io/address/0xe82719202e5965Cf5D9B6673B7503a3b92DE20be#code"]
+	},
+	{
+		"name": "TheRun", 
+		"tags": ["randomness", "timestamp"],
+		"date": "April 12, 2016",
+		"link": ["https://medium.com/@hrishiolickel/why-smart-contracts-fail-undiscovered-bugs-and-what-we-can-do-about-them-119aa2843007", "https://eprint.iacr.org/2016/633","https://etherscan.io/address/0xcac337492149bdb66b088bf5914bedfbf78ccc18"]
+	},
+	{
+		"name": "Rock paper scissors", 
+		"tags": ["private", "randomness"],
+		"date": "April 21, 2016",
+		"link": ["https://www.reddit.com/r/ethtrader/comments/4fpn6o/play_rockpaperscissors_for_1_eth_via_mist_wallet/"]
+	},
+	{
+		"name": "Governmental", 
+		"tags": ["dos", "self-dos"],
+		"date": "April 26, 2016",
+		"link": ["https://www.reddit.com/r/ethereum/comments/4ghzhv/governmentals_1100_eth_jackpot_payout_is_stuck/"],
+		"loss:": "1100 ETH stuck"
+	},
+	{
+		"name": "Geth", 
+		"tags": ["off-chain"],
+		"date": "May 16, 2016",
+		"link": ["https://www.reddit.com/r/ethereum/comments/4jj92n/7218eth_hacked_geth_and_mists_ipc_security_risk/"],
+		"loss": "7,218 ETH"
+	},
+	{
+		"name": "Maker DAO", 
+		"tags": ["reentrancy"],
+		"date": "June 17, 2016",
+		"link": ["https://www.reddit.com/r/ethereum/comments/4nmohu/from_the_maker_dao_slack_today_we_discovered_a/"],
+		"loss": "No loss"
+	},
+	{
+		"name": "DAO", 
+		"tags": ["reentrancy"],
+		"date": "June 17, 2016",
+		"link": ["https://blog.slock.it/the-history-of-the-dao-and-lessons-learned-d06740f8cfa5", "https://theethereum.wiki/w/index.php/The_DAO_Refunds"],
+		"loss": "615,391 ETH"
+	},
+	{
+		"name": "HackerGold", 
+		"tags": ["mixup"],
+		"date": "January 4, 2017",
+		"link": ["https://blog.zeppelin.solutions/hackergold-bug-analysis-68d893cad738"],
+		"loss": "No loss"
+	},
+	{
+		"name": "Poloniex - Short Addresses", 
+		"tags": ["off-chain", "short address"],
+		"date": "April 6, 2017",
+		"link": ["https://blog.golemproject.net/how-to-find-10m-by-just-reading-blockchain-6ae9d39fcd95"],
+		"loss": "No loss"
+	},
+	{
+		"name": "Bithumb", 
+		"tags": ["off-chain"],
+		"date": "June 29, 2017",
+		"link": ["https://bravenewcoin.com/news/fourth-largest-bitcoin-exchange-bithumb-hacked-for-billions-of-won"]
+	},
+	{
+		"name": "Classic Ether Wallet", 
+		"tags": ["off-chain"],
+		"date": "June 29, 2017",
+		"link": ["http://www.ibtimes.co.uk/classic-ether-wallet-has-been-hacked-do-not-use-it-send-currency-1628479"]
+	},
+	{
+		"name": "Augur Rep Token", 
+		"tags": ["serpent"],
+		"date": "July 13, 2017",
+		"link": ["https://blog.zeppelin.solutions/augur-rep-token-critical-vulnerability-disclosure-3d8bdffd79d2"],
+		"loss": "No loss"
+	},
+	{
+		"name": "CoinDash", 
+		"tags": ["off-chain"],
+		"date": "July 17, 2017",
+		"link": ["https://blog.slock.it/the-history-of-the-dao-and-lessons-learned-d06740f8cfa5"]
+	},
+	{
+		"name": "Parity multi-sig bug 1", 
+		"tags": ["re-init", "delegatecall", "bad library"],
+		"date": "July 19, 2017",
+		"link": ["http://paritytech.io/the-multi-sig-hack-a-postmortem/"],
+		"loss": "150,000 ETH"
+	},
+	{
+		"name": "SmartBillions", 
+		"tags": ["randomness", "blockhash"],
+		"date": "October 5, 2017",
+		"link": ["https://www.reddit.com/r/ethereum/comments/74d3dc/smartbillions_lottery_contract_just_got_hacked/"],
+		"loss": "400 ETH"
+	},
+	{
+		"name": "Bancor", 
+		"tags": ["front-running"],
+		"date": "October 10, 2017",
+		"link": ["https://hackernoon.com/front-running-bancor-in-150-lines-of-python-with-ethereum-api-d5e2bfd0d798"],
+		"loss": "No loss"
+	},
+	{
+		"name": "Parity multi-sig bug 2", 
+		"tags": ["delegatecall"],
+		"date": "November 6, 2017",
+		"link": ["http://paritytech.io/a-postmortem-on-the-parity-multi-sig-library-self-destruct/"],
+		"loss": "513,774 ETH and tokens stuck"
+	}
+]

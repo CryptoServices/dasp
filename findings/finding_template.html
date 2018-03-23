@@ -1,0 +1,78 @@
+<article>
+	<div class="container">
+		<!-- title -->
+		<h1 class="display-4" id="item-{{ num }}">{{ num }} Reentrancy</h1>
+		<!-- alternate names -->
+		<h5>also known as <strong>race to empty</strong>, <strong>recursive call vulnerability</strong></h5>
+		<hr class="my-4">
+		<!-- quote -->
+		<p class="lead">
+			We believe more security audits or more tests would have made no difference. The main problem was that reviewers did not know what to look for.
+			<footer class="blockquote-footer">Christoph Jentzsch</cite></footer>
+		</p>
+		<hr>
+		<!-- description -->
+		<p>The Reentrancy attack is probably the most famous Ethereum vulnerability to this day. It surprised everyone when discovered for the first time and led to the theft of millions of dollars as well as a hard fork of Ethereum.</p>
+		<!-- numbers if loss occured -->
+		<p><strong>Loss</strong>: estimated at 3.5M ETH (~50M USD at the time)</p>
+		<!-- timeline of events -->
+		<p><strong>Timeline of discovery</strong>:</p>
+		<table class="table">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Date</th>
+		      <th scope="col">Event</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <th scope="row">Jun 5, 2016</th>
+		      <td><a href="https://blog.ethereum.org/2016/06/10/smart-contract-security/">Christian Reitwiessner discovers an antipattern in solidity</a></td>
+		    </tr>
+		    <tr>
+		    	<th scope="row">Jun 9, 2016</th>
+		    	<td><a href="http://vessenes.com/more-ethereum-attacks-race-to-empty-is-the-real-deal/" target="_blank">More Ethereum Attacks: Race-To-Empty is the Real Deal (vessenes.com)</a></td>
+		    </tr>
+		    <tr>
+		    	<th scope="row">Jun 12, 2016</th>
+		    	<td><a href="https://blog.slock.it/no-dao-funds-at-risk-following-the-ethereum-smart-contract-recursive-call-bug-discovery-29f482d348b" target="_blank">No DAO funds at risk following the Ethereum smart contract ‘recursive call’ bug discovery (blog.slock.it)</a></td>
+		    </tr>
+		    <tr>
+		    	<th scope="row">Jun 17, 2016</th>
+		    	<td><a href="https://www.reddit.com/r/ethereum/comments/4oi2ta/i_think_thedao_is_getting_drained_right_now/">I think TheDAO is getting drained right now (reddit.com)</a></td>
+		    </tr>
+		    <tr>
+		    	<th scope="row">Aug 24, 2016</th>
+		    	<td><a href="https://blog.slock.it/the-history-of-the-dao-and-lessons-learned-d06740f8cfa5">The History of the DAO and Lessons Learned (blog.slock.it)</a></td>
+		    </tr>
+		  </tbody>
+		</table>
+		<!-- real world impact -->
+		<p><strong>Real World Impact</strong>:</p>
+		<ul>
+			<li><a href="https://en.wikipedia.org/wiki/The_DAO_(organization)" target="_blank">The DAO</a></li>
+		</ul>
+		<!-- example scenario -->
+		<p><strong>Example</strong>:</p>
+		<ol>
+			<li>A <span class="victim contract">smart contract</span> tracks how much funds users have and has a public <code>withdraw()</code> function allowing users to retrieve funds.</li>
+			<li>A <span class="attacker contract">malicious smart contract</span> queries the <code>withdraw()</code> function to retrieve some funds.</li>
+			<li>The flow sends the ethers to the <span class="attacker contract">malicious contract</span> <strong>before subtracting the amount from the user's tracked credit</strong>.</li>
+			<li>The <code>withdraw()</code> function uses the <code>call().value(amount)</code> <strong>low level function</strong> to send the ethers to the <span class="attacker contract">malicious contract</span>.</li>
+			<li>The <span class="attacker contract">malicious contract</span> has a payable <code>fallback()</code> function that accepts the funds and calls back into the <code>withdraw()</code> function of the <span class="victim contract">victim contract</span>.</li>
+			<li>The second execution still works because the funds haven't been subtracted from the account yet. This allows the <span class="attacker contract">malicious contract</span> to withdraw its funds a second time.</li>
+		</ol>
+		<!-- code examples -->
+		<p><strong>Code Example</strong>:</p>
+		<ul>
+			<li><a href="http://blockchain.unica.it/projects/ethereum-survey/attacks.html#simpledao">blockchain.unica.it</a></li>
+			<li><a href="https://github.com/trailofbits/not-so-smart-contracts/tree/master/reentrancy">github.com/trailofbits</a></li>
+		</ul>
+		<!-- additional resources -->
+		<p><strong>Additional Resources</strong>:</p>
+		<ul>
+			<li><a href="https://etherscan.io/address/0xbb9bc244d798123fde783fcc1c72d3bb8c189413#code">The DAO smart contract</a></li>
+			<li><a href="http://hackingdistributed.com/2016/06/18/analysis-of-the-dao-exploit/">Analysis of the DAO exploit</a></li>
+		</ul>
+	</div>
+</article>

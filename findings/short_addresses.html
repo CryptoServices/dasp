@@ -1,0 +1,56 @@
+<article>
+	<div class="container">
+		<!-- title -->
+		<h1 class="display-4" id="item-{{ num }}"><i class="fas fa-sort-amount-down fa-sm"></i> {{ num }} Short Address Attack</h1>
+		<!-- alternate names -->
+		<h5>also known as or related to <strong>off-chain issues</strong>, <strong>client vulnerabilities</strong></h5>
+		<hr class="my-4">
+		<!-- quote -->
+		<p class="lead">
+			The service preparing the data for token transfers assumed that users will input 20-byte long addresses, but the length of the addresses was not actually checked. 
+			<footer class="blockquote-footer">Paweł Bylica</cite></footer>
+		</p>
+		<hr>
+		<!-- description -->
+		<p>Short address attacks are a side-effect of the EVM itself accepting incorrectly padded arguments. Attackers can exploit this by using specially-crafted addresses to make poorly coded clients encode arguments incorrectly before including them in transactions. Is this an EVM issue or a client issue? Should it be fixed in smart contracts instead? While everyone has a different opinion, the fact is that a great deal of ether could be directly impacted by this issue. While this vulnerability has yet to be exploited in the wild, it is a good demonstration of problems arising from the interaction between clients and the Ethereum blockchain. Other off-chain issues exist: an important one is the Ethereum ecosystem's deep trust in specific javascript front ends, browser plugins and public nodes. An infamous off-chain exploit was used in <a href="https://medium.com/crypt-bytes-tech/ico-hack-coindash-ed-dd336a4f1052">the hack of the Coindash ICO</a> that modified the company's Ethereum address on their webpage to trick participants into sending ethers to the attacker's address.</p>
+		<!-- timeline of events -->
+		<p><strong>Timeline of discovery</strong>:</p>
+		<table class="table">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Date</th>
+		      <th scope="col">Event</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <th scope="row">April 6, 2017</th>
+		      <td><a href="https://blog.golemproject.net/how-to-find-10m-by-just-reading-blockchain-6ae9d39fcd95">How to Find $10M Just by Reading the Blockchain</a></td>
+		    </tr>
+		  </tbody>
+		</table>
+		<!-- real world impact -->
+		<p><strong>Real World Impact</strong>:</p>
+		<ul>
+			<li><a href="https://blog.golemproject.net/how-to-find-10m-by-just-reading-blockchain-6ae9d39fcd95" target="_blank">unknown exchange(s)</a></li>
+		</ul>
+		<!-- example scenario -->
+		<p><strong>Example</strong>:</p>
+		<ol>
+			<li>An exchange API has a trading function that takes a recipient address and an amount.</li>
+			<li>The API then interacts with the smart contract <code>transfer(address _to, uint256 _amount)</code> function with padded arguments: it prepends the address (of an expected 20-byte length) with 12 zero bytes to make it 32-byte long</li>
+			<li>Bob (<code>0x3bdde1e9fbaef2579dd63e2abbf0be445ab93f<strong>00</strong></code>) asks Alice to transfer him 20 tokens. He maliciously gives her his address truncated to remove the trailing zeroes.</li>
+			<li>Alice uses the exchange API with the shorter 19-byte address of Bob (<code>0x3bdde1e9fbaef2579dd63e2abbf0be445ab93f</code>).</li>
+			<li>The API pads the address with 12 zero bytes, making it 31 bytes instead of the 32 bytes. Effectively stealing one byte from the following <code>_amount</code> argument.</li>
+			<li>Eventually, the EVM executing the smart contract's code will remark that the data is not properly padded and will add the missing byte at the end of the <code>_amount</code> argument. Effectively transfering 256 times more tokens than thought.</li>
+		</ol>
+		<!-- additional resources -->
+		<p><strong>Additional Resources</strong>:</p>
+		<ul>
+			<li><a href="http://vessenes.com/the-erc20-short-address-attack-explained/" target="_blank">The ERC20 Short Address Attack Explained</a></li>
+			<li><a href="https://ericrafaloff.com/analyzing-the-erc20-short-address-attack/" target="_blank">Analyzing the ERC20 Short Address Attack</a></li>
+			<li><a href="https://blog.coinfabrik.com/smart-contract-short-address-attack-mitigation-failure/" target="_blank">Smart Contract Short Address Attack Mitigation Failure</a></li>
+			<li><a href="https://github.com/OpenZeppelin/zeppelin-solidity/issues/261" target="_blank">Remove short address attack checks from tokens</a></li>
+		</ul>
+	</div>
+</article>

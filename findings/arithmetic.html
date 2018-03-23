@@ -1,0 +1,69 @@
+<article>
+	<div class="container">
+		<!-- title -->
+		<h1 class="display-4" id="item-{{ num }}"><i class="fas fa-sort-numeric-up fa-sm"></i> {{ num }}. Arithmetic Issues</h1>
+		<!-- alternate names -->
+		<h5>also known as <strong>integer overflow</strong> and <strong>integer underflow</strong></h5>
+		<hr class="my-4">
+		<!-- quote -->
+		<p class="lead">An overflow condition gives incorrect results and, particularly if the possibility has not been anticipated, can compromise a program’s reliability and security.
+			<footer class="blockquote-footer">Jules Dourlens</cite></footer>
+		</p>
+		<hr>
+		<!-- description -->
+		<p>Integer overflows and underflows are not a new class of vulnerability, but they are especially dangerous in smart contracts, where unsigned integers are prevalent and most developers are used to simple <code>int</code> types (which are often just signed integers). If overflows occur, many benign-seeming codepaths become vectors for theft or denial of service.</p>
+		<!-- real world impact -->
+		<p><strong>Real World Impact</strong>:</p>
+		<ul>
+			<li><a href="http://blockchain.unica.it/projects/ethereum-survey/attacks.html" target="_blank">The DAO</a></li>
+		</ul>
+		<!-- example scenario -->
+		<p><strong>Example</strong>:
+
+		<ol>
+			<li>A <span class="contract victim">smart contract</span>'s <code>withdraw()</code> function allows you to retrieve ether donated to the contract as long as your balance remains positive after the operation.</li>
+			<li>An <span class="contract attacker">attacker</span> attempts to withdraw more than his or her current balance.</li>
+			<li>The <code>withdraw()</code> function check's result is always a positive amount, allowing the attacker to withdraw more than allowed. The resulting balance underflows and becomes an order of magnitude larger than it should be.</li>
+		</ol>
+
+
+		<!-- code examples -->
+		<p><strong>Code Example</strong>:</p>
+
+		<p>The most straightforward example is a function that does not check for integer underflow, allowing you to withdraw an infinite amount of tokens:</p>
+
+<pre><code>function withdraw(uint _amount) {
+	require(balances[msg.sender] - _amount > 0);
+	msg.sender.transfer(_amount);
+	balances[msg.sender] -= _amount;
+}</code></pre>
+
+		<p>The second example (spotted during the <a href="https://github.com/Arachnid/uscc/tree/master/submissions-2017/doughoyte" target="_blank">Underhanded Solidity Coding Contest</a>) is an off-by-one error facilitated by the fact that an array's length is represented by an unsigned integer:</p>
+
+<pre><code>function popArrayOfThings() {
+	require(arrayOfThings.length >= 0);
+	arrayOfThings.length--; 
+}</code></pre>
+
+		<p>The third example is a variant of the first example, where the result of arithmetic on two unsigned integers is an unsigned integer:</p>
+
+<pre><code>function votes(uint postId, uint upvote, uint downvotes) {
+	if (upvote - downvote < 0) {
+		deletePost(postId)
+	}
+}</code></pre>
+
+		<p>The fourth example features the soon-to-be-deprecated <code>var</code> keyword. Because <code>var</code> will change itself to the smallest type needed to contain the assigned value, it will become an <code>uint8</code> to hold the value 0. If the loop is meant to iterate more than 255 times, it will never reach that number and will stop when the execution runs out of gas:</p>
+
+<pre><code>for (var i = 0; i < somethingLarge; i ++) {
+	// ...
+}</code></pre>
+
+		<!-- additional resources -->
+		<p><strong>Additional Resources</strong>:</p>
+		<ul>
+			<li><a href="https://ethereumdev.io/safemath-protect-overflows/" target="_blank">SafeMath to protect from overflows</a></li>
+			<li><a href="https://github.com/trailofbits/not-so-smart-contracts/tree/master/integer_overflow" target="_blank">Integer overflow code example</a></li>
+		</ul>
+	</div>
+</article>

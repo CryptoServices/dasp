@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% set page = "timeline" %}
+
+{% block title %}
+	DASP - Timeline of vulnerabilities
+{% endblock %}
+
+{% block content %}
+<!-- message -->
+<section class="alert alert-warning" style="border-radius: 0;">
+	<p>This is a curated list of known vulnerabilities in smart contracts sorted by date. To contribute to this list, submit a pull request on our <a href="#" target="_blank">github</a>.</p>
+</section>
+<!-- list -->
+<table class="table table-striped timeline">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col" width="170px">Date</th>
+      <th scope="col">Event</th>
+      <th style="width:150px;">Loss</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for vuln in vulns %}
+    <tr>
+      <th scope="row">{{ vuln.date }}</th>
+      <td>
+      	<a href="{{ vuln.link[0] }}" target="_blank">{{ vuln.name }}</a>
+      	{% for tag in vuln.tags %}
+			<span class="badge badge-info">{{ tag }}</span>
+      	{% endfor %}
+      </td>
+      <td>{{ vuln.loss }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

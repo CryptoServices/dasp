@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>
+	DASP - Timeline of vulnerabilities
+</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- bootstrap.css -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- highlight code -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+	<!-- custom -->
+	<link rel="stylesheet" href="styles.css">
+	<!-- fontawesome.js -->
+	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<!-- favicon stuff :/ -->
+	<link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="favicon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+	<link rel="manifest" href="favicon/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+
+	<!-- navbar -->
+	<nav class="navbar navbar-expand-lg real" style="margin-bottom:20px;">
+		<a class="navbar-brand" href="/">
+			<img src="ncc.png" alt="logo" style="width:100px">
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item ">
+					<a class="nav-link" href="index.html">Top 10 <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="timeline.html">Timeline <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="https://consensys.github.io/smart-contract-best-practices/" target="_blank">Best Practices</a>
+				</li>
+				<li>
+					<a class="nav-link" href="https://github.com/nccgroup/GOATCasino" target="_blank">Capture The Flag</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav my-2 my-lg-0">
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="modal" data-target="#aboutModal" href="#">About</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="mailto:uscons-info@nccgroup.trust">Contact</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<!-- about modal -->
+	<div id="aboutModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="aboutModal" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">About</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>This page was concocted by: 
+	        	<ul>
+	        		<li><a href="https://www.cryptologie.net" target="_blank">David Wong</a></li>
+	        		<li><a href="https://twitter.com/mah3mm" target="_blank">Mason Hemmel</a></li>
+	        	</ul>
+	       	</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- container -->
+	<div class="container">
+
+		
+<!-- message -->
+<section class="alert alert-warning" style="border-radius: 0;">
+	<p>This is a curated list of known vulnerabilities in smart contracts sorted by date. To contribute to this list, submit a pull request on our <a href="#" target="_blank">github</a>.</p>
+</section>
+<!-- list -->
+<table class="table table-striped timeline">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col" width="170px">Date</th>
+      <th scope="col">Event</th>
+      <th style="width:150px;">Loss</th>
+    </tr>
+  </thead>
+  <tbody>
+  	
+    <tr>
+      <th scope="row">August 11, 2015</th>
+      <td>
+      	<a href="http://martin.swende.se/blog/Breaking_the_house.html" target="_blank">Roulette</a>
+      	
+			<span class="badge badge-info">randomness</span>
+      	
+			<span class="badge badge-info">private seed</span>
+      	
+      </td>
+      <td>No loss</td>
+    </tr>
+    
+    <tr>
+      <th scope="row">February 6, 2016</th>
+      <td>
+      	<a href="https://www.kingoftheether.com/postmortem.html" target="_blank">King of the Ether</a>
+      	
+			<span class="badge badge-info">unchecked return value</span>
+      	
+      </td>
+      <td></td>
+    </tr>
+    
+    <tr>
+      <th scope="row">February 26, 2016</th>
+      <td>
+      	<a href="https://www.reddit.com/r/ethereum/comments/47nkoi/psa_check_your_ethaddressorg_wallets_and_any/" target="_blank">EthAddress.org</a>
+      	
+			<span class="badge badge-info">off-chain</span>
+      	
+      </td>
+      <td>120 ETH</td>
+    </tr>
+    
+    <tr>
+      <th scope="row">April 11, 2016</th>
+      <td>
+      	<a href="https://www.reddit.com/r/ethereum/comments/4e5y30/live_example_of_underhanded_solidity_coding_on/" target="_blank">FirePonzi</a>
+      	
+			<span class="badge badge-info">mixup</span>
+      	
+			<span class="badge badge-info">underscore variables</span>
+      	
+      </td>
+      <td>0.1 ETH</td>
+    </tr>
+    
+    <tr>
+      <th scope="row">April 11, 2016</th>
+      <td>
+      	<a href="https://blog.ethereum.org/2016/06/19/thinking-smart-contract-security/" target="_blank">Rubixi</a>
+      	
+			<span class="badge badge-info">mixup</span>
+      	
+			<span class="badge badge-info">constructor</span>
+      	
+      </td>
+      <td></td>
+    </tr>
+    
+    <tr>
+      <th scope="row">April 12, 2016</th>
+      <td>
+      	<a href="https://medium.com/@hrishiolickel/why-smart-contracts-fail-undiscovered-bugs-and-what-we-can-do-about-them-119aa2843007" target="_blank">TheRun</a>
+      	
+			<span class="badge badge-info">randomness</span>
+      	
+			<span class="badge badge-info">timestamp</span>
+      	
+      </td>
+      <td></td>
+    </tr>
+    
+    <tr>
+      <th scope="row">April 21, 2016</th>
+      <td>
+      	<a href="https://www.reddit.com/r/ethtrader/comments/4fpn6o/play_rockpaperscissors_for_1_eth_via_mist_wallet/" target="_blank">Rock paper scissors</a>
+      	
+			<span class="badge badge-info">private</span>
+      	
+			<span class="badge badge-info">randomness</span>
+      	
+      </td>
+      <td></td>
+    </tr>
+    
+    <tr>
+      <th scope="row">April 26, 2016</th>
+      <td>
+      	<a href="https://www.reddit.com/r/ethereum/comments/4ghzhv/governmentals_1100_eth_jackpot_payout_is_stuck/" target="_blank">Governmental</a>
+      	
+			<span class="badge badge-info">dos</span>
+      	
+			<span class="badge badge-info">self-dos</span>
+      	
+      </td>
+      <td></td>
+    </tr>
+    
+    <tr>
+      <th scope="row">May 16, 2016</th>
+      <td>
+      	<a href="https://www.reddit.com/r/ethereum/comments/4jj92n/7218eth_hacked_geth_and_mists_ipc_security_risk/" target="_blank">Geth</a>
+      	
+			<span class="badge badge-info">off-chain</span>
+      	
+      </td>
+      <td>7,218 ETH</td>
+    </tr>
+    
+    <tr>
+      <th scope="row">June 17, 2016</th>
+      <td>
+      	<a href="https://www.reddit.com/r/ethereum/comments/4nmohu/from_the_maker_dao_slack_today_we_discovered_a/" target="_blank">Maker DAO</a>
+      	
+			<span class="badge badge-info">reentrancy</span>
+      	
+      </td>
+      <td>No loss</td>
+    </tr>
+    
+    <tr>
+      <th scope="row">June 17, 2016</th>
+      <td>
+      	<a href="https://blog.slock.it/the-history-of-the-dao-and-lessons-learned-d06740f8cfa5" target="_blank">DAO</a>
+      	
+			<span class="badge badge-info">reentrancy</span>
+      	
+      </td>
+      <td>615,391 ETH</td>
+    </tr>
+    
+    <tr>
+      <th scope="row">January 4, 2017</th>
+      <td>
+      	<a href="https://blog.zeppelin.solutions/hackergold-bug-analysis-68d893cad738" target="_blank">HackerGold</a>
+      	
+			<span class="badge badge-info">mixup</span>
+      	
+      </td>
+      <td>No loss</td>
+    </tr>
+    
+    <tr>
+      <th scope="row">April 6, 2017</th>
+      <td>
+      	<a href="https://blog.golemproject.net/how-to-find-10m-by-just-reading-blockchain-6ae9d39fcd95" target="_blank">Poloniex - Short Addresses</a>
+      	
+			<span class="badge badge-info">off-chain</span>
+      	
+			<span class="badge badge-info">short address</span>
+      	
+      </td>
+      <td>No loss</td>
+    </tr>
+    
+    <tr>
+      <th scope="row">June 29, 2017</th>
+      <td>
+      	<a href="https://bravenewcoin.com/news/fourth-largest-bitcoin-exchange-bithumb-hacked-for-billions-of-won" target="_blank">Bithumb</a>
+      	
+			<span class="badge badge-info">off-chain</span>
+      	
+      </td>
+      <td></td>
+    </tr>
+    
+    <tr>
+      <th scope="row">June 29, 2017</th>
+      <td>
+      	<a href="http://www.ibtimes.co.uk/classic-ether-wallet-has-been-hacked-do-not-use-it-send-currency-1628479" target="_blank">Classic Ether Wallet</a>
+      	
+			<span class="badge badge-info">off-chain</span>
+      	
+      </td>
+      <td></td>
+    </tr>
+    
+    <tr>
+      <th scope="row">July 13, 2017</th>
+      <td>
+      	<a href="https://blog.zeppelin.solutions/augur-rep-token-critical-vulnerability-disclosure-3d8bdffd79d2" target="_blank">Augur Rep Token</a>
+      	
+			<span class="badge badge-info">serpent</span>
+      	
+      </td>
+      <td>No loss</td>
+    </tr>
+    
+    <tr>
+      <th scope="row">July 17, 2017</th>
+      <td>
+      	<a href="https://blog.slock.it/the-history-of-the-dao-and-lessons-learned-d06740f8cfa5" target="_blank">CoinDash</a>
+      	
+			<span class="badge badge-info">off-chain</span>
+      	
+      </td>
+      <td></td>
+    </tr>
+    
+    <tr>
+      <th scope="row">July 19, 2017</th>
+      <td>
+      	<a href="http://paritytech.io/the-multi-sig-hack-a-postmortem/" target="_blank">Parity multi-sig bug 1</a>
+      	
+			<span class="badge badge-info">re-init</span>
+      	
+			<span class="badge badge-info">delegatecall</span>
+      	
+			<span class="badge badge-info">bad library</span>
+      	
+      </td>
+      <td>150,000 ETH</td>
+    </tr>
+    
+    <tr>
+      <th scope="row">October 5, 2017</th>
+      <td>
+      	<a href="https://www.reddit.com/r/ethereum/comments/74d3dc/smartbillions_lottery_contract_just_got_hacked/" target="_blank">SmartBillions</a>
+      	
+			<span class="badge badge-info">randomness</span>
+      	
+			<span class="badge badge-info">blockhash</span>
+      	
+      </td>
+      <td>400 ETH</td>
+    </tr>
+    
+    <tr>
+      <th scope="row">October 10, 2017</th>
+      <td>
+      	<a href="https://hackernoon.com/front-running-bancor-in-150-lines-of-python-with-ethereum-api-d5e2bfd0d798" target="_blank">Bancor</a>
+      	
+			<span class="badge badge-info">front-running</span>
+      	
+      </td>
+      <td>No loss</td>
+    </tr>
+    
+    <tr>
+      <th scope="row">November 6, 2017</th>
+      <td>
+      	<a href="http://paritytech.io/a-postmortem-on-the-parity-multi-sig-library-self-destruct/" target="_blank">Parity multi-sig bug 2</a>
+      	
+			<span class="badge badge-info">delegatecall</span>
+      	
+      </td>
+      <td>513,774 ETH and tokens stuck</td>
+    </tr>
+    
+  </tbody>
+</table>
+
+
+	<!-- /container -->
+	</div>
+
+	<!--Footer-->
+	<footer class="page-footer font-small indigo pt-0" style="background-color:#4054b2;color:white">
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-md-12 py-5">
+	                <div class="mb-5 flex-center" style="display:flex;align-items:center;justify-content:space-around;">
+<!--
+	                    <a>
+	                        <i class="fab fa-ethereum fa-2x"></i>
+	                    </a>
+	                    <a>
+	                        <i class="fab fa-ethereum fa-2x"></i>
+	                    </a>-->
+	                    <a>
+	                        <i class="fab fa-ethereum fa-2x"></i>
+	                    </a>
+
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+
+	    <div class="py-3 text-center" style="background-color:#33438e;">
+	        <a href="https://www.nccgroup.trust" target="_blank">NCC Group</a> | <a href="https://cryptoservices.github.io/" target="_blank">Cryptography Services</a>
+	    </div>
+
+	</footer>
+	<!--/Footer-->
+	
+	<!-- bootstrap.js -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<!-- fontawesome.js -->
+	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<!-- highlight.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+	<!-- script -->
+	<script>
+		// hljs.highlighting
+		hljs.initHighlightingOnLoad();
+		// bootstrap.scrollspy
+		$(document).ready( () => {
+			$('body').scrollspy({ target: '#top10' });
+		})
+	</script>
+</body>
+</html>

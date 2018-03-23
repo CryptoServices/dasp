@@ -1,0 +1,80 @@
+<article>
+	<div class="container">
+		<h1 class="display-4" id="item-{{ num }}"><i class="fas fa-recycle fa-sm"></i> {{ num }}. Reentrancy</h1>
+		<h5>also known as or related to <strong>race to empty</strong>, <strong>recursive call vulnerability</strong>, <strong>call to the unknown</strong></h5>
+		<hr class="my-4">
+<!--		<p class="lead">
+			We believe more security audits or more tests would have made no difference. The main problem was that reviewers did not know what to look for.
+			<footer class="blockquote-footer">Christoph Jentzsch</cite></footer>
+		</p>-->
+		<p class="lead">
+		this exploit was missed in review so many times by so many different people: reviewers tend to review functions one at a time, and assume that calls to secure subroutines will operate securely and as intended.
+			<footer class="blockquote-footer">Phil Daian</cite></footer>
+		</p>
+		<hr>
+		<p>The Reentrancy attack, probably the most famous Ethereum vulnerability, surprised everyone when discovered for the first time. It was first unveiled during a multimillion dollar heist which led to a hard fork of Ethereum. Reentrancy occurs when external contract calls are allowed to make new calls to the calling contract before the initial execution is complete. For a function, this means that the contract state may change in the middle of its execution as a result of a call to an untrusted contract or the use of a low level function with an external address.</p>
+		<p><strong>Loss</strong>: estimated at 3.5M ETH (~50M USD at the time)</p>
+		<p><strong>Timeline of discovery</strong>:</p>
+
+		<table class="table">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Date</th>
+		      <th scope="col">Event</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <th scope="row">Jun 5, 2016</th>
+		      <td><a href="https://blog.ethereum.org/2016/06/10/smart-contract-security/">Christian Reitwiessner discovers an antipattern in solidity</a></td>
+		    </tr>
+		    <tr>
+		    	<th scope="row">Jun 9, 2016</th>
+		    	<td><a href="http://vessenes.com/more-ethereum-attacks-race-to-empty-is-the-real-deal/" target="_blank">More Ethereum Attacks: Race-To-Empty is the Real Deal (vessenes.com)</a></td>
+		    </tr>
+		    <tr>
+		    	<th scope="row">Jun 12, 2016</th>
+		    	<td><a href="https://blog.slock.it/no-dao-funds-at-risk-following-the-ethereum-smart-contract-recursive-call-bug-discovery-29f482d348b" target="_blank">No DAO funds at risk following the Ethereum smart contract ‘recursive call’ bug discovery (blog.slock.it)</a></td>
+		    </tr>
+		    <tr>
+		    	<th scope="row">Jun 17, 2016</th>
+		    	<td><a href="https://www.reddit.com/r/ethereum/comments/4oi2ta/i_think_thedao_is_getting_drained_right_now/">I think TheDAO is getting drained right now (reddit.com)</a></td>
+		    </tr>
+		    <tr>
+		    	<th scope="row">Aug 24, 2016</th>
+		    	<td><a href="https://blog.slock.it/the-history-of-the-dao-and-lessons-learned-d06740f8cfa5">The History of the DAO and Lessons Learned (blog.slock.it)</a></td>
+		    </tr>
+		  </tbody>
+		</table>
+		<p><strong>Real World Impact</strong>:</p>
+		<ul>
+			<li><a href="https://en.wikipedia.org/wiki/The_DAO_(organization)" target="_blank">The DAO</a></li>
+		</ul>
+		<p><strong>Example</strong>:</p>
+		<ol>
+			<li>A <span class="victim contract">smart contract</span> tracks the balance of a number of external addresses and allows users to retrieve funds with its public <code>withdraw()</code> function.</li>
+			<li>A <span class="attacker contract">malicious smart contract</span> uses the <code>withdraw()</code> function to retrieve its entire balance.</li>
+			<li>The <span class="victim contract">victim contract</span> executes the <code>call.value(amount)()</code> <strong>low level function</strong> to send the ether to the <span class="attacker contract">malicious contract</span> <strong>before updating the balance of the <span class="attacker contract">malicious contract</span></strong>. 
+			<li>The <span class="attacker contract">malicious contract</span> has a payable <code>fallback()</code> function that accepts the funds and then calls back into the <span class="victim contract">victim contract</span>'s <code>withdraw()</code> function.</li>
+			<li>This second execution triggers a transfer of funds: remember, the balance of the <span class="attacker contract">malicious contract</span> still hasn't been updated from the first withdrawal. As a result, the  <span class="attacker contract">malicious contract</span> successfully withdraws its entire balance a second time.</li>
+		</ol>
+		<p><strong>Code Example</strong>:</p>
+
+		<p>The following function contains a function vulnerable to a reentrancy attack. When the low level <code>call()</code> function sends ether to the <code>msg.sender</code> address, it becomes vulnerable; if the address is a smart contract, the payment will trigger its fallback function with what's left of the transaction gas:</p>
+
+<pre><code>function withdraw(uint _amount) {
+	require(balances[msg.sender] >= _amount);
+	msg.sender.call.value(_amount)();
+	balances[msg.sender] -= _amount;
+}</code></pre>
+
+		<p><strong>Additional Resources</strong>:</p>
+		<ul>
+			<li><a href="https://etherscan.io/address/0xbb9bc244d798123fde783fcc1c72d3bb8c189413#code" target="_blank">The DAO smart contract</a></li>
+			<li><a href="http://hackingdistributed.com/2016/06/18/analysis-of-the-dao-exploit/" target="_blank">Analysis of the DAO exploit</a></li>
+			<li><a href="http://blockchain.unica.it/projects/ethereum-survey/attacks.html#simpledao" target="_blank">Simple DAO code example</a></li>
+			<li><a href="https://github.com/trailofbits/not-so-smart-contracts/tree/master/reentrancy" target="_blank">Reentrancy code example</a></li>
+			<li><a href="https://blog.citymayor.co/posts/how-someone-tried-to-exploit-a-flaw-in-our-smart-contract-and-steal-all-of-its-ether/" target="_blank">How Someone Tried to Exploit a Flaw in Our Smart Contract and Steal All of Its Ether</a></li>
+		</ul>
+	</div>
+</article>

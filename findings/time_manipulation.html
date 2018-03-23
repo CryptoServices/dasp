@@ -1,0 +1,44 @@
+<article>
+	<div class="container">
+		<!-- title -->
+		<h1 class="display-4" id="item-{{ num }}"><i class="fas fa-clock fa-sm"></i> {{ num }}. Time manipulation</h1>
+		<!-- alternate names -->
+		<h5>also known as <strong>timestamp dependence</strong></h5>
+		<hr class="my-4">
+		<!-- quote -->
+		<p class="lead">
+			If a miner holds a stake on a contract, he could gain an advantage by choosing a suitable timestamp for a block he is mining.
+			<footer class="blockquote-footer">Nicola Atzei, Massimo Bartoletti and Tiziana Cimoli</cite></footer>
+		</p>
+		<hr>
+		<!-- description -->
+		<p>From locking a token sale to unlocking funds at a specific time for a game, contracts sometimes need to rely on the current time. This is usually done via <code>block.timestamp</code> or its alias <code>now</code> in Solidity. But where does that value come from? From the miners! Because a transaction's miner has leeway in reporting the time at which the mining occurred, good smart contracts will avoid relying strongly on the time advertised. Note that <code>block.timestamp</code> is also sometimes (mis)used in the generation of random numbers as is discussed in <a href="#item-6">#6. Bad Randomness</a>.</p>
+		<!-- real world impact -->
+		<p><strong>Real World Impact</strong>:</p>
+		<ul>
+			<li><a href="http://blockchain.unica.it/projects/ethereum-survey/attacks.html#governmental" target="_blank">GovernMental</a></li>
+		</ul>
+		<!-- example scenario -->
+		<p><strong>Example</strong>:</p>
+		<ol>
+			<li>A <span class="contract victim">game</span> pays out the very first player at midnight today.</li>
+			<li>A malicious <span class="contract attacker">miner</span> includes his or her attempt to win the game and sets the timestamp to midnight.</li>
+			<li>A bit before midnight the miner ends up mining the block. The real current time is "close enough" to midnight (the currently set timestamp for the block), other nodes on the network decide to accept the block.</li>
+		</ol>
+		<!-- code examples -->
+		<p><strong>Code Example</strong>:</p>
+		<p>The following function only accepts calls that come after a specific date. Since miners can influence their block's timestamp (to a certain extent), they can attempt to mine a block containing their transaction with a block timestamp set in the future. If it is close enough, it will be accepted on the network and the transaction will give the miner ether before any other player could have attempted to win the game:</p>
+<pre><code>function play() public {
+	require(now > 1521763200 && neverPlayed == true);
+	neverPlayed = false;
+	msg.sender.transfer(1500 ether);
+}</code></pre>
+		<!-- additional resources -->
+		<p><strong>Additional Resources</strong>:</p>
+		<ul>
+			<li><a href="https://eprint.iacr.org/2016/1007" target="_blank">A survey of attacks on Ethereum smart contracts</a></li>
+			<li><a href="https://blog.positive.com/predicting-random-numbers-in-ethereum-smart-contracts-e5358c6b8620" target="_blank">Predicting Random Numbers in Ethereum Smart Contracts</a></li>
+			<li><a href="https://blog.acolyer.org/2017/02/23/making-smart-contracts-smarter/" target="_blank">Making smart contracts smarter</a></li>
+		</ul>
+	</div>
+</article>

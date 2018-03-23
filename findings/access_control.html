@@ -1,0 +1,45 @@
+<article>
+	<div class="container">
+		<!-- title -->
+		<h1 class="display-4" id="item-{{ num }}"><i class="fas fa-id-card fa-sm"></i> {{ num }}. Access Control</h1>
+		<hr class="my-4">
+		<!-- quote -->
+		<p class="lead">
+			it was possible to turn the Parity Wallet library contract into a regular multi-sig wallet and become an owner of it by calling the initWallet function.
+			<footer class="blockquote-footer">Parity</cite></footer>
+		</p>
+		<hr>
+		<!-- description -->
+		<p>Access Control issues are common in all programs, not just smart contracts. In fact, it's <a href="https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf" target="_blank">number 5 on the OWASP top 10</a>. One usually accesses a contract's functionality through its public or external functions. While insecure <strong>visibility</strong> settings give attackers straightforward ways to access a contract's private values or logic, access control bypasses are sometimes more subtle. These vulnerabilities can occur when contracts use the deprecated <code>tx.origin</code> to validate callers, handle large authorization logic with lengthy <code>require</code> and make reckless use of <code>delegatecall</code> in <a href="https://blog.zeppelin.solutions/proxy-libraries-in-solidity-79fbe4b970fd" target="_blank">proxy libraries</a> or <a href="https://blog.indorse.io/ethereum-upgradeable-smart-contract-strategies-456350d0557c" target="_blank">proxy contracts</a>.</p>
+		<p><strong>Loss</strong>: estimated at 150,000 ETH (~30M USD at the time)</p>
+		<!-- real world impact -->
+		<p><strong>Real World Impact</strong>:</p>
+		<ul>
+			<li><a href="http://paritytech.io/the-multi-sig-hack-a-postmortem/" target="_blank">Parity Multi-sig bug 1</a></li>
+			<li><a href="http://paritytech.io/a-postmortem-on-the-parity-multi-sig-library-self-destruct/" target=""_blank">Parity Multi-sig bug 2</a></li>
+			<li><a href="https://blog.ethereum.org/2016/06/19/thinking-smart-contract-security/" target="_blank">Rubixi</a></li>
+		</ul>
+		<!-- example scenario -->
+		<p><strong>Example</strong>:</p>
+		<ol>
+			<li>A <span class="contract victim">smart contract</span> designates the address which initializes it as the contract's owner. This is a common pattern for granting special privileges such as the ability to withdraw the contract's funds.</li>
+			<li>Unfortunately, the initialization function can be called by anyone&mdasheven after it has already been called. Allowing anyone to become the owner of the contract and take its funds.</li>
+		</ol>
+		<!-- code examples -->
+		<p><strong>Code Example</strong>:</p>
+		<p>In the following example, the contract's <strong>initialization function</strong> sets the caller of the function as its owner. However, the logic is detached from the contract's constructor, and it does not keep track of the fact that it has already been called.</p>
+<pre><code>function initContract() public {
+	owner = msg.sender;
+}</code></pre>
+		<p>In the Parity multi-sig wallet, this initialization function was detached from the wallets themselves and defined in a "library" contract. Users were expected to initialize their own wallet by calling the library's function via a <code>delegateCall</code>. Unfortunately, as in our example, the function did not check if the wallet had already been initialized. Worse, since the library was a smart contract, anyone could initialize the library itself and call for its destruction.</p>
+		<!-- additional resources -->
+		<p><strong>Additional Resources</strong>:</p>
+		<ul>
+			<li><a href="https://github.com/paritytech/parity/pull/6103/files" target="_blank">Fix for Parity multi-sig wallet bug 1</a></li>
+			<li><a href="http://paritytech.io/security-alert-2/" target="_blank">Parity security alert 2</a></li>
+			<li><a href="https://blog.zeppelin.solutions/on-the-parity-wallet-multisig-hack-405a8c12e8f7" target="_blank">On the Parity wallet multi-sig hack</a></li>
+			<li><a href="https://github.com/trailofbits/not-so-smart-contracts/tree/master/unprotected_function" target="_blank">Unprotected function</a></li>
+			<li><a href="https://etherscan.io/address/0xe82719202e5965Cf5D9B6673B7503a3b92DE20be#code" target="_blank">Rubixi's smart contract</a></li>
+		</ul>
+	</div>
+</article>

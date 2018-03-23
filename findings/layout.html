@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>{% block title %}{% endblock %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- bootstrap.css -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- highlight code -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+	<!-- custom -->
+	<link rel="stylesheet" href="styles.css">
+	<!-- fontawesome.js -->
+	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<!-- favicon stuff :/ -->
+	<link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="favicon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+	<link rel="manifest" href="favicon/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+
+	<!-- navbar -->
+	<nav class="navbar navbar-expand-lg real" style="margin-bottom:20px;">
+		<a class="navbar-brand" href="/">
+			<img src="ncc.png" alt="logo" style="width:100px">
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item {% if page == "top10" %}active{% endif %}">
+					<a class="nav-link" href="index.html">Top 10 <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item {% if page == "timeline" %}active{% endif %}">
+					<a class="nav-link" href="timeline.html">Timeline <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="https://consensys.github.io/smart-contract-best-practices/" target="_blank">Best Practices</a>
+				</li>
+				<li>
+					<a class="nav-link" href="https://github.com/nccgroup/GOATCasino" target="_blank">Capture The Flag</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav my-2 my-lg-0">
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="modal" data-target="#aboutModal" href="#">About</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="mailto:uscons-info@nccgroup.trust">Contact</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<!-- about modal -->
+	<div id="aboutModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="aboutModal" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">About</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>This page was concocted by: 
+	        	<ul>
+	        		<li><a href="https://www.cryptologie.net" target="_blank">David Wong</a></li>
+	        		<li><a href="https://twitter.com/mah3mm" target="_blank">Mason Hemmel</a></li>
+	        	</ul>
+	       	</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- container -->
+	<div class="container">
+
+		{% block content %}
+
+		{% endblock %}
+
+	<!-- /container -->
+	</div>
+
+	<!--Footer-->
+	<footer class="page-footer font-small indigo pt-0" style="background-color:#4054b2;color:white">
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-md-12 py-5">
+	                <div class="mb-5 flex-center" style="display:flex;align-items:center;justify-content:space-around;">
+<!--
+	                    <a>
+	                        <i class="fab fa-ethereum fa-2x"></i>
+	                    </a>
+	                    <a>
+	                        <i class="fab fa-ethereum fa-2x"></i>
+	                    </a>-->
+	                    <a>
+	                        <i class="fab fa-ethereum fa-2x"></i>
+	                    </a>
+
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+
+	    <div class="py-3 text-center" style="background-color:#33438e;">
+	        <a href="https://www.nccgroup.trust" target="_blank">NCC Group</a> | <a href="https://cryptoservices.github.io/" target="_blank">Cryptography Services</a>
+	    </div>
+
+	</footer>
+	<!--/Footer-->
+	
+	<!-- bootstrap.js -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<!-- fontawesome.js -->
+	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<!-- highlight.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+	<!-- script -->
+	<script>
+		// hljs.highlighting
+		hljs.initHighlightingOnLoad();
+		// bootstrap.scrollspy
+		$(document).ready( () => {
+			$('body').scrollspy({ target: '#top10' });
+		})
+	</script>
+</body>
+</html>

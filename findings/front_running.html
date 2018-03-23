@@ -1,0 +1,42 @@
+<article>
+	<div class="container">
+		<!-- title -->
+		<h1 class="display-4" id="item-{{ num }}"><i class="fas fa-random fa-sm"></i> {{ num }}. Front-Running</h1>
+		<!-- alternate names -->
+		<h5>also known as <strong>time-of-check vs time-of-use (TOCTOU)</strong>, <strong>race condition</strong>, <strong>transaction ordering dependence (TOD)</strong></h5>
+		<hr class="my-4">
+		<!-- quote -->
+		<p class="lead">
+			Turns out, all it takes is about 150 lines of Python to get a working front-running algorithm. 
+			<footer class="blockquote-footer">Ivan Bogatyy</cite></footer>
+		</p>
+		<hr>
+		<!-- description -->
+		<p>Since miners always get rewarded via gas fees for running code on behalf of externally owned addresses (EOA), users can specify higher fees to have their transactions mined more quickly. Since the Ethereum blockchain is public, everyone can see the contents of others' pending transactions. This means if a given user is revealing the solution to a puzzle or other valuable secret, a malicious user can steal the solution and copy their transaction with higher fees to preempt the original solution. If developers of smart contracts are not careful, this situation can lead to practical and devastating front-running attacks. <!-- this attack is so surprising that even ERC-20 is vulnerable to it --></p>
+		<!-- numbers if loss occured -->
+<!--		<p><strong>Loss</strong>: unknown</p>-->
+		<!-- real world impact -->
+		<p><strong>Real World Impact</strong>:</p>
+		<ul>
+			<li><a href="https://hackernoon.com/front-running-bancor-in-150-lines-of-python-with-ethereum-api-d5e2bfd0d798" target="_blank">Bancor</a></li>
+			<li><a href="https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/" target="_blank">ERC-20</a></li>
+			<li><a href="">TheRun</a></li>
+		</ul>
+		<!-- example scenario -->
+		<p><strong>Example</strong>:</p>
+		<ol>
+			<li>A <span class="victim contract">smart contract</span> publishes an RSA number (<code>N = prime1 x prime2</code>).</li>
+			<li>A call to its <code>submitSolution()</code> public function with the right <code>prime1</code> and <code>prime2</code> rewards the caller.</li>
+			<li>Alice successfuly factors the RSA number and submits a solution.</li>
+			<li><span class="contract attacker">Someone</span> on the network sees Alice's transaction (containing the solution) waiting to be mined and submits it with a higher gas price.</li>
+			<li>The second transaction gets picked up first by miners due to the higher paid fee. The <span class="contract attacker">attacker</span> wins the prize.</li>
+		</ol>
+		<!-- additional resources -->
+		<p><strong>Additional Resources</strong>:</p>
+		<ul>
+			<li><a href="https://blog.positive.com/predicting-random-numbers-in-ethereum-smart-contracts-e5358c6b8620" target="_blank">Predicting random numbers in Ethereum smart contracts</a></li>
+			<li><a href="https://blog.0xproject.com/front-running-griefing-and-the-perils-of-virtual-settlement-part-1-8554ab283e97" target="_blank">Front-running, Griefing and the Perils of Virtual Settlement</a></li>
+			<li><a href="https://www.youtube.com/watch?v=RL2nE3huNiI" target="_blank">Frontrunning Bancor</a></li>
+		</ul>
+	</div>
+</article>
