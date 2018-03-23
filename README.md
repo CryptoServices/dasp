@@ -1,12 +1,5 @@
 # OWDASP
 
-## Todo
-
-- [ ] fill in each vuln
-- [ ] finish the design
-- [ ] find a better name?
-- [ ] make a logo
-
 ## How to build
 
 1. make sure you have `pyenv`
