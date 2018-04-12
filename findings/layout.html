@@ -32,7 +32,7 @@
 	<meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
 	<meta name="theme-color" content="#ffffff">
 </head>
-<body>
+<body data-spy="scroll" data-target="#top10">
 
 	<!-- navbar -->
 	<nav class="navbar navbar-expand-lg real navbar-light" style="margin-bottom:20px;">
@@ -151,10 +151,6 @@
 	<script>
 		// hljs.highlighting
 		hljs.initHighlightingOnLoad();
-		// bootstrap.scrollspy
-		$(document).ready( () => {
-			$('body').scrollspy({ target: '#top10' });
-		})
 	</script>
 </body>
 </html>
