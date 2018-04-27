@@ -138,5 +138,12 @@
 		"date": "November 6, 2017",
 		"link": ["http://paritytech.io/a-postmortem-on-the-parity-multi-sig-library-self-destruct/"],
 		"loss": "513,774 ETH and tokens stuck"
+	},
+	{
+		"name": "Batch Overflow",
+		"tags": ["integer overflow"],
+		"date": "April 22, 2018",
+		"link": ["https://cryptoslate.com/batchoverflow-exploit-creates-trillions-of-ethereum-tokens/", "https://peckshield.com/2018/04/22/batchOverflow/"],
+		"loss": "Large loss in tokens"
 	}
 ]
