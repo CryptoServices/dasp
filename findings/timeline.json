@@ -140,10 +140,17 @@
 		"loss": "513,774 ETH and tokens stuck"
 	},
 	{
-		"name": "Batch Overflow",
+		"name": "Batch and proxy Overflow",
 		"tags": ["integer overflow"],
 		"date": "April 22, 2018",
-		"link": ["https://cryptoslate.com/batchoverflow-exploit-creates-trillions-of-ethereum-tokens/", "https://peckshield.com/2018/04/22/batchOverflow/"],
+		"link": ["https://cryptoslate.com/batchoverflow-exploit-creates-trillions-of-ethereum-tokens/", "https://peckshield.com/2018/04/22/batchOverflow/", "https://peckshield.com/2018/04/25/proxyOverflow/"],
 		"loss": "Large loss in tokens"
+	},
+	{
+		"name": "MyEtherWallet Domain-Hijacking",
+		"tags": ["off-chain", "bgp"],
+		"date": "April 24, 2018",
+		"link": ["https://peckshield.com/2018/04/26/mew-dns-hijacking/"],
+		"loss": "525 ETH"
 	}
 ]
