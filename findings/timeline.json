@@ -158,13 +158,13 @@
 		"tags": ["mixup"],
 		"date": "June 15, 2018",
 		"link": ["https://www.reddit.com/r/CryptoCurrency/comments/8rfm9w/all_transfers_of_the_800m_marketcap_icon_icx_are/"],
-		"loss": "No Loss"
+		"loss": "No loss"
 	},
 	{
 		"name": "Spankchain",
 		"tags": ["reentrancy"],
 		"date": "October 6, 2018",
-		"link": ["https://medium.com/spankchain/we-got-spanked-what-we-know-so-far-d5ed3a0f38fe"],
-		"loss": "165.38"
+		"link": ["https://www.reddit.com/r/ethereum/comments/9mp4yc/we_got_spanked_what_we_know_so_far"],
+		"loss": "165.38 ETH"
 	}
 ]
