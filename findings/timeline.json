@@ -152,5 +152,19 @@
 		"date": "April 24, 2018",
 		"link": ["https://peckshield.com/2018/04/26/mew-dns-hijacking/"],
 		"loss": "525 ETH"
+	},
+	{
+		"name": "ICON",
+		"tags": ["mixup"],
+		"date": "June 15, 2018",
+		"link": ["https://www.reddit.com/r/CryptoCurrency/comments/8rfm9w/all_transfers_of_the_800m_marketcap_icon_icx_are/"],
+		"loss": "No loss"
+	},
+	{
+		"name": "Spankchain",
+		"tags": ["reentrancy"],
+		"date": "October 6, 2018",
+		"link": ["https://www.reddit.com/r/ethereum/comments/9mp4yc/we_got_spanked_what_we_know_so_far"],
+		"loss": "165.38 ETH"
 	}
 ]
