@@ -67,3 +67,22 @@ tbody th {
 	min-width:130px;
 	text-align:right;
 }
+
+.card {
+	max-width:1024px;
+	margin:auto;
+}
+.card-content {
+	padding:20px;
+}
+.lineNumbers {
+	text-align:right;
+	padding-right:10px;
+}
+.card-subheader {
+	background-color:rgba(0,0,0,.005);
+	font-size:14px;
+}
+.list-group-item {
+	background-color:inherit;
+}

@@ -1,6 +1,11 @@
-<article>
-    
-<h2 id="smart-contract-insecurity----broken-access-control">1. Smart Contract (in)Security -- Broken Access Control</h2>
+<div class="card">
+    <div class="card-header">
+        <h2 id="smart-contract-insecurity----broken-access-control">1. Smart Contract (in)Security -- Broken Access Control</h2>
+    </div>
+    <ul class="card-subheader list-group list-group-flush">
+       <li class="list-group-item">Written by <i class="fas fa-user"></i> Eric Schorn on <i class="fas fa-calendar"></i> November 5th</li>
+     </ul>
+    <div class="card-content">
 <p>This blog post is the first of a series that will describe some simple real-world <a href="https://www.investopedia.com/terms/s/smart-contracts.asp">smart contract</a> security bugs, how they were exploited, the resulting impacts and the corresponding code fixes. The series will cover more than $250M USD in losses directly attributable to smart contract security bugs.</p>
 <p><strong>What are smart contracts?</strong> Imagine relatively short, publicly-accessible programs capable of owning large amounts of money and that execute complex transaction logic in an unchangeable and unstoppable fashion on a platform that is rapidly evolving alongside with its tools. Think blockchain 2.0 where transactions invoke code execution. These autonomous programs issue and manage private currencies, implement novel funding systems, tokenize capital assets, enable <a href="https://newalchemy.io/">new business models</a> and even breed digital cats called <a href="https://www.nytimes.com/2018/05/18/style/cryptokitty-auction.html">CryptoKitties</a>! There is no imagination required - the fascinating and flourishing world of smart contracts is already here with well over <a href="https://coinmarketcap.com/currencies/ethereum/">$1B USD of Ethereum changing hands daily</a>.</p>
 <p><strong>Bugs are bad!</strong> One of the primary challenges limiting the progress of smart contract adoption is security. It is well known that &quot;every program always has one more bug&quot;, and <a href="http://sunnyday.mit.edu/accidents/MCO_report.pdf">some bugs can be catastrophic</a>. In the case of smart contracts, security bugs may exist wherever code behavior diverges from developer intent. This applies to both local low-level behavior through to the global system or social context (like <a href="https://www.investopedia.com/terms/f/frontrunning.asp">front-running</a>). Further, sometimes intent is stated and sometimes intent is unstated. Clearly, 'security' is a big, broad umbrella term in this application space.</p>
@@ -88,4 +93,5 @@ function execute(address _to, uint _value, bytes _data) onlyOwner returns(bool _
 <p><strong>Not so simple.</strong> The Parity Multisig Wallet was very carefully and methodically developed in the open with many, many expert eyeballs on it. A large part of the original motivation for developing it was to mitigate some of the risks associated with holding crypto-currencies. While the bug may look simple in retrospect, it still fell through the cracks and it wasn't the last bug. In this instance, it all boils down to broken access control in some novel circumstances. The lesson is to very carefully inspect function modifiers and function visibility for lurking weaknesses in access control.</p>
 <p>Our running total now stands at $30M USD. Stay tuned, as there is always one more bug!</p>
 
-</article>
+    </div>
+</div>
