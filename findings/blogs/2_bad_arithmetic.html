@@ -1,0 +1,66 @@
+<div class="card">
+    <div class="card-header">
+        <h2 id="smart-contract-insecurity----broken-access-control">Smart Contract (in)Security – Bad Arithmetic</h2>
+    </div>
+    <ul class="card-subheader list-group list-group-flush">
+       <li class="list-group-item">Written by <i class="fas fa-user"></i> Eric Schorn on <i class="fas fa-calendar"></i> 5 November 2018</li>
+     </ul>
+    <div class="card-content">
+
+<h1 class="article-heading"></h1>
+
+<p>This blog post is the second in a series that will describe some simple real-world <a href="https://www.investopedia.com/terms/s/smart-contracts.asp">smart contract</a> security bugs, how they were exploited, the resulting impacts and the corresponding code fixes. So far, we have reached $30M USD of our series target of more than $250M USD in losses directly attributable to smart contract security bugs. This time, we will make two deposits of exactly 57,896,044,618,658,097,711,785,492,504,343,953,926,634,992,332,820,282,019,728,792,003,956,564,819,968 tokens each, for a grand total of 0 tokens!</p>
+
+<p><strong>What are smart contracts?</strong> To summarize the full background <a href="https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2018/september/smart-contract-insecurity-broken-access-control/">found in the first blog post</a>, smart contracts are relatively short, publicly-accessible programs capable of owning large amounts of money and that execute complex transaction logic in an unchangeable and unstoppable fashion on a platform that is rapidly evolving alongside its tools. <a href="http://solidity.readthedocs.io/en/v0.4.24/">Solidity</a> is a new language created specifically for <a href="https://www.ethereum.org/">Ethereum</a>-based smart contracts that compiles to bytecode and is ultimately executed in the Ethereum Virtual Machine. Smart contracts are here today with well over <a href="https://coinmarketcap.com/currencies/ethereum/">$1B USD of Ethereum changing hands daily</a>.</p>
+
+<p><strong>Bugs are bad!</strong> One of the primary challenges limiting the progress of smart contract adoption is security. It is well known that “every program always has one more bug” and <a href="http://sunnyday.mit.edu/accidents/MCO_report.pdf">some bugs can be catastrophic</a>. Smart contracts can provide extremely visible, immediate, and impactful examples of code gone wrong.</p>
+
+<p><strong>The old is new again.</strong> This particular blog post will specifically cover <strong>bad arithmetic</strong> (such as integer overflow). While smart contracts provide a <a href="http://dasp.co/#item-3">new context with unique novelties</a>, this is most certainly not a new problem. Bad arithmetic occupies the attention of almost an entire section in the <a href="https://wiki.sei.cmu.edu/confluence/pages/viewpage.action?pageId=88487628">SEI CERT Oracle Coding Standard for Java</a>. Other languages suffer from the exact same scary scenarios, and these vulnerabilities map to several Common Weakness Enumerations, <a href="https://cwe.mitre.org/data/definitions/190.html">including #190</a>. Smart contracts offer some new and cool challenges related to their public execution environment, unchangeable nature, variety of stakeholder categories and high logical complexity.</p>
+
+<p><strong>Your very own crypto-currency.</strong> The most popular and visible type of contract on Ethereum involves issuing a custom crypto-currency (also called tokens) - <a href="https://medium.com/bitfwd/how-to-issue-your-own-token-on-ethereum-in-less-than-20-minutes-ac1f8f022793">you can do it yourself in less than 20 minutes</a>. This type of contract essentially <a href="https://medium.com/@jgm.orinoco/understanding-erc-20-token-contracts-a809a7310aa5">implements a data structure that keeps track of balances</a>, along with a few functions that perform transfers by correctly adjusting account balances in response to transactions. The most popular <a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md">token standard is ERC-20</a> with hundreds and hundreds <a href="https://etherscan.io/tokens">of token varieties</a> implementing the standard wich allows them to be tracked and used by exchanges, tools and other smart contracts. Some of these tokens will likely <a href="https://blog.coinbase.com/adding-erc20-support-to-coinbase-fe9cba6782b">arrive on mainstream trading exchanges</a> in the near future.</p>
+
+<p><strong>Show me the code.</strong> Let’s have a look at the actual code implementing BeautyChainToken, which can be easily <a href="https://etherscan.io/address/0xc5d105e63711398af9bbff092d4b6769c82f793d#code">found on Etherscan</a>. Scrolling through the code reveals the implementation of a library named SafeMath near the very top, followed by a series of contracts that build on top of each other. Ignore all the confusing stuff, but note that there are frequent references to variables called <code>to</code>, <code>from</code>, <code>amount</code> and <code>balances</code> as well as functions called <code>transfer()</code> and <code>approve()</code>. This is the actual recipe for a fully functional token in less than 300 lines of code.</p>
+
+<p>Let’s inspect the <strong><code>batchTransfer()</code></strong> function starting on line 255 which is replicated below. It takes two parameters – the first parameter (<code>_receivers</code>) is a list of destination account addresses, and the second parameter (<code>_value</code>) is the number of tokens to transfer to each destination account address. Line 256 calculates the number of receiver addresses in the list and then line 257 can calculate the total <code>amount</code> that will be withdrawn from the sender’s account balance. The right half of line 259 makes sure the sender has sufficient balance before line 261 adjusts it downwards by the total <code>amount</code> calculated earlier on line 257. Finally, line 262 starts a loop that performs the individual transfers by adjusting each receiver’s balance upward by <code>_value</code>.</p>
+
+<p> </p>
+
+<pre style="width: 825px"><code>255 function batchTransfer(address[] _receivers, uint256 _value) public whenNotPaused returns (bool) {
+256   uint cnt = _receivers.length;
+257   uint256 amount = uint256(cnt) * _value;
+258   require(cnt &gt; 0 &amp;&amp; cnt &lt;= 20);
+259   require(_value &gt; 0 &amp;&amp; balances[msg.sender] &gt;= amount);
+260
+261   balances[msg.sender] = balances[msg.sender].sub(amount);
+262   for (uint i = 0; i &lt; cnt; i++) {
+263     balances[_receivers[i]] = balances[_receivers[i]].add(_value);
+264     Transfer(msg.sender, _receivers[i], _value);
+265   }
+266   return true;
+267 }</code></pre>
+
+<p> </p>
+
+<p>One of the most common data types in Solidity is the unsigned 256-bit integer (<code>uint256</code> or <code>uint</code>) which can represent any value between 0 and 2<sup>256</sup>-1 inclusive. If contract code performs an ordinary arithmetic operation yielding a result outside this range, the result silently wraps around and contract execution continues with bad data – sometimes catastrophically. For this reason, the contract shown above specifically uses the specialized <code>.sub()</code> and <code>.add()</code> functions (on lines 261 and 263 respectively) from the SafeMath library we saw earlier. These <a href="https://medium.com/coinmonks/practicing-safemath-with-solidity-and-openzeppelin-cde4cba9ce39">common functions</a> are written to abort if an underflow or overflow is encountered, which will prevent execution from continuing with bad data. You might be asking why line 257 uses the ordinary <code>'*'</code> rather than <code>.mul()</code> from SafeMath…</p>
+
+<p><strong>Bug!</strong> Regarding line 257, if <code>_value</code> were set to 2<sup>255</sup> and then doubled because of a <code>cnt</code> of two calculated on the prior line, the result would be stored into <code>amount</code> as 0 (rather than 2<sup>256</sup>) due to the wrap-around effect. This is the exact bug we are aiming to unpack – execution would now continue with bad data in play. The <code>_value</code> requested was huge but the total calculated <code>amount</code> is 0! The (bad) <code>amount</code> of 0 would then pass the balance check on line 259 and continue through the balance adjustment on line 261 just fine. However, the loop that performs the individual transfers utilizes the massive <code>_value</code> variable (with the <code>amount</code> variable no longer referenced). This means the loop would increase each of the two destination balances by 2<sup>255</sup>. Jackpot!</p>
+
+<p><strong>What happened?</strong> An attacker called the <code>batchTransfer()</code> function shown above and provided it with a <code>_receivers</code> list containing two addresses and a <code>_value</code> parameter set to 2<sup>255</sup>. This can be clearly seen in <a href="https://etherscan.io/tx/0xad89ff16fd1ebe3a0a7cf4ed282302c06626c1af33221ebe0d3a470aba4a660f">the actual Etherscan transaction here</a> (click on ‘Decode Input Data’). As described, the <code>cnt</code> of addresses is calculated to be 2, so multiplying that with the <code>value</code> of 2<sup>255</sup> causes an overflow to an <code>amount</code> of 0. Execution continued onward with this bad data. The various checks pass, the sender’s balance is decreased by an <code>amount</code> of 0, and finally two massive deposits of <code>_value</code> are made into the <code>_receivers</code> balance. By the way, if you haven’t guessed it already, the large number referenced in the very first paragraph of this post happens to be 2<sup>255</sup>. For a real-money spend of approximately $0.02 USD to fund the attack transaction, two massive lots of tokens were created from thin air and deposited into the <code>_receiver</code> addresses. This resulted in the loss of trust in this token contract and thus completely devastated its value.</p>
+
+<p><strong>Let’s fix it.</strong> All we have to do is replace the ordinary <code>'*'</code> on line 257 with <code>.mul()</code> as shown below. Lines prefixed with ‘–’ are to be removed from the contract code while those prefixed with ‘+’ are to be added.</p>
+
+<p> </p>
+
+<div class="sourceCode1" id="cb2"><pre class="sourceCode1 markdown"><code class="sourceCode1 markdown">- <span class="fl">   uint256 amount = uint256(cnt) * _value;</span>
+<span class="fl">+    uint256 amount = uint256(cnt).mul(_value);</span></code></pre></div>
+
+<p> </p>
+
+<p><strong>Simple in retrospect?</strong> While almost all security bugs become obvious in retrospect, developers have been making these same mistakes for well over 20 years and continue to do so every day. Note that the above fix is moot for the BeautyChainToken, because there are no software updates for smart contracts. Once smart contracts are deployed they are essentially unchangeable and unstoppable beyond their original code. So our incredibly simple fix consisting of just a handful of characters can only be a lesson for the future, underscoring the theme of “do not allow arithmetic to silently go wrong and then continue execution with bad data”.</p>
+
+<p><strong>Not so simple.</strong> Tokens were one of the first use cases for smart contracts and have been very carefully developed in the open by top experts. The presence of the SafeMath library demonstrates that this is a known problem area and the code we see above indeed makes use of it. In fact, the ERC-20 coin standard itself has several <a href="https://medium.com/@dexaran820/erc20-token-standard-critical-problems-3c10fd48657b">known problems</a> that remain only partially addressed (at best). Part of the challenge is that the development tool ecosystem is still emerging. <a href="https://www.comp.nus.edu.sg/~loiluu/papers/oyente.pdf">Formal methods and tools</a> are beginning to appear that will automatically find these issues. Unfortunately, it is still early days and smart contracts remain the Wild West for now.</p>
+
+<p>The implosion of trust resulting from 2<sup>255</sup> tokens appearing out of thin air (twice) is hard to measure. We’ll run with $1M USD as a super conservative estimate that is roughly 1/20th the average funds raised in an <a href="https://cryptonews.com/news/on-average-an-ico-raised-29-more-this-year-excluding-telegra-1626.htm">Initial Coin Offering</a>. This brings our running total to $31M USD. Stay tuned, as there is always one more bug!</p>
+
+    </div>
+</div>

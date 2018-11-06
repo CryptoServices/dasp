@@ -16,7 +16,9 @@ vulnList = [
 
 blogList = [
 	["Broken Access Control", "1_broken_access_control.html"],
+	["Bad Arithmetic", "2_bad_arithmetic.html"]
 ]
+blogList.reverse()
 
 
 def main():

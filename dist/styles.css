@@ -71,6 +71,7 @@ tbody th {
 .card {
 	max-width:1024px;
 	margin:auto;
+	margin-bottom:50px;
 }
 .card-content {
 	padding:20px;
