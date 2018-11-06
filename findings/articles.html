@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% set page = "articles" %}
+
+{% block title %}
+	DASP - Articles
+{% endblock %}
+
+{% block content %}
+<!-- blogs -->
+ 	{% for post in posts %}
+    {{ post[1] }}
+  {% endfor %}
+{% endblock %}

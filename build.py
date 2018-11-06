@@ -14,6 +14,11 @@ vulnList = [
 	['Unknown Unknowns', 'unknown.html'],
 ]
 
+blogList = [
+	["Broken Access Control", "1_broken_access_control.html"],
+]
+
+
 def main():
 
 	# retrieve vulnerabilities
@@ -28,9 +33,20 @@ def main():
 	toWrite = tt.render(vulnList=vulnList)
 	open('./dist/index.html', 'w').write(toWrite)
 
+	# retrieve articles
+	for rank, post in enumerate(blogList):
+		ff = open('./findings/blogs/' + post[1])
+		tt = Template(ff.read())
+		blogList[rank][1] = tt.render(num=rank+1)
+		ff.close()
+
+	# articles
+	tt = Environment(loader=FileSystemLoader('findings/')).from_string(open('./findings/articles.html').read())
+	toWrite = tt.render(posts=blogList)
+	open('./dist/articles.html', 'w').write(toWrite)
+
 	# timeline
 	tt = Environment(loader=FileSystemLoader('findings/')).from_string(open('./findings/timeline.html').read())
-
 	vulns = json.load(open('./findings/timeline.json'))
 	toWrite = tt.render(vulns=vulns)
 	open('./dist/timeline.html', 'w').write(toWrite)
